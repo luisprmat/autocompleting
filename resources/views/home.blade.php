@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     Bienvenido, {{ auth()->user()->name }}
-                </div>
+                 </div>
             </div>
         </div>
     </div>
