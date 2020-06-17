@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="mb-0">Listado de paises</h1>
-                        <a class="btn btn-primary" href="{{ route('countries.create') }}">Nuevo pais</a>
+                        <a class="btn btn-primary" href="{{ route('countries.create') }}"><i class="fas fa-plus fa-fw"></i> Nuevo pais</a>
                     </div>
                     <div class="card-body">
                         {{ $countries->links() }}
