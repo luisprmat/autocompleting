@@ -1,5 +1,7 @@
 <?php
 
+use App\Country;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,8 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Country::truncate();
+        User::truncate();
+
         $this->call([
-            // UserSeeder::class,
+            UserSeeder::class,
             CountrySeeder::class,
         ]);
     }

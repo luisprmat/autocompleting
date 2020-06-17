@@ -10,37 +10,30 @@
                         <a class="btn btn-primary" href="{{ route('countries.create') }}">Nuevo pais</a>
                     </div>
                     <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Pais</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($countries as $country)
-                                   <tr>
-                                    <td scope="row">{{ $country->id }}</td>
-                                    <td>{{ $country->name }}</td>
-                                    <td>
-                                        <a class="btn btn-primary btn-sm" href="{{ route('countries.edit', $country) }}">Editar</a>
-                                        <a class="btn btn-danger btn-sm"
-                                            href="{{ route('countries.destroy', $country) }}"
-                                            onclick="event.preventDefault();
-                                                document.getElementById('country-delete-{{$country->id}}').submit();"
-                                        >Eliminar</a>
-                                        <form action="{{ route('countries.destroy', $country) }}"
-                                            method="POST"
-                                            class="d-none"
-                                            id="country-delete-{{ $country->id }}"
-                                        >@csrf @method('DELETE')
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        {{ $countries->links() }}
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Pais</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($countries as $country)
+                                    <tr>
+                                        <td scope="row">{{ $country->id }}</td>
+                                        <td><a href="{{ route('countries.show', $country) }}">{{ $country->name }}</a></td>
+                                        <td>
+                                            <x-actions-component size="sm" :model="$country" />
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         {{ $countries->links() }}
                     </div>
                 </div>
