@@ -13,26 +13,32 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <header>
-            @include('partials.nav')
+    <div id="app" class="d-flex flex-column justify-content-between h-screen">
+        <div>
+            <header>
+                @include('partials.nav')
 
-            <!-- Session messages -->
-            <div class="container my-4">
-                @if (session('status'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        {{ session('status') }}
-                    </div>
-                @endif
-            </div>
-        </header>
+                <!-- Session messages -->
+                <div class="container my-3">
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                </div>
+            </header>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <main class="py-4">
+                @yield('content')
+            </main>
+        </div>
+
+        <footer class="text-center text-secondary bg-white py-3 shadow-sm">
+            {{ config('app.name', 'Laravel') }}, &copy; {{ date('Y') }}
+        </footer>
     </div>
 
     <!-- Scripts -->
