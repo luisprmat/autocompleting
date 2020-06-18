@@ -10,13 +10,13 @@
                         <a class="btn btn-primary" href="{{ route('countries.create') }}"><i class="fas fa-plus fa-fw"></i> Nuevo pais</a>
                     </div>
                     <div class="card-body">
-                        {{ $countries->links() }}
+                        {{ $countries->withQueryString()->links() }}
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Pais</th>
+                                        <th><a href="{{ $sortable->url('id', request('sort') == 'id' ? 'desc' : 'asc') }}"># <i class="{{ $sortable->classes('id') }}"></i></a></th>
+                                        <th><a href="{{ $sortable->url('name', request('sort') == 'name' ? 'desc' : 'asc') }}">Pais <i class="{{ $sortable->classes('name') }}"></i></a></th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -34,7 +34,7 @@
                             </table>
                         </div>
 
-                        {{ $countries->links() }}
+                        {{ $countries->withQueryString()->links() }}
                     </div>
                 </div>
             </div>

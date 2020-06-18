@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Sortable;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -17,11 +18,19 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Sortable $sortable)
     {
-        return view('countries.index', [
-            'countries' => Country::paginate(10)
-        ]);
+        $sortable->setCurrentOrder(request('sort'));
+
+        $countries = Country::query()
+            ->when(in_array($sortable->getColumn(), ['id', 'name']) , function ($q) use ($sortable) {
+                $q->orderBy($sortable->getColumn(), $sortable->getDirection());
+            })
+            ->paginate(10)
+        ;
+
+
+        return view('countries.index', compact(['countries', 'sortable']));
     }
 
     /**
