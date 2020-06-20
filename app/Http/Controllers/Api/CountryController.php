@@ -8,13 +8,8 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Country::all()->pluck('name');
-    }
-
-    public function show($name)
-    {
-        return Country::where('name', $name)->first();
+        return Country::where('name', 'like', "%{$request['query']}%")->paginate();
     }
 }

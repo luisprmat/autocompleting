@@ -4,10 +4,13 @@
             <vue-typeahead-bootstrap
                 v-model="query"
                 :data="countries"
+                :serializer="item => item.name"
                 placeholder="Buscar un pais"
-                @hit="getCountry(query)"
+                @hit="countrySelected = $event"
+                @input="getCountryList"
             ></vue-typeahead-bootstrap>
         </div>
+        <p>Seleccionaste <span v-if="countrySelected">{{ countrySelected.id }}: {{ countrySelected.name }}</span></p>
         <div class="form-group">
             <a :href="url" class="btn btn-primary" role="button">Ver pais seleccionado</a>
         </div>
@@ -22,27 +25,17 @@
         data() {
             return {
                 query: '',
-                countries: [],
-                countrySelected: {},
-                url: ''
+                countrySelected: null,
+                url: '',
+                countries: []
             }
         },
-        mounted() {
-            axios.get(`/api/countries`)
-                .then(res => {
-                    console.log(res.data)
-                    this.countries = res.data
-                })
-                .catch(err => {
-                    console.log(err.response)
-                })
-        },
         methods: {
-            getCountry(name) {
-                axios.get(`/api/countries/${name}`)
+            getCountryList(name) {
+                axios.get(`/api/countries/?query=${this.query}`)
                     .then(res => {
-                        this.countrySelected = res.data
-                        this.getUrl()
+                        this.countries = res.data.data
+                        if(this.countrySelected) this.getUrl()
                     })
                     .catch(err => {
                         console.log(err.response.data)

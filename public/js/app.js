@@ -1925,6 +1925,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1933,29 +1936,18 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       query: '',
-      countries: [],
-      countrySelected: {},
-      url: ''
+      countrySelected: null,
+      url: '',
+      countries: []
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/api/countries").then(function (res) {
-      console.log(res.data);
-      _this.countries = res.data;
-    })["catch"](function (err) {
-      console.log(err.response);
-    });
-  },
   methods: {
-    getCountry: function getCountry(name) {
-      var _this2 = this;
+    getCountryList: function getCountryList(name) {
+      var _this = this;
 
-      axios.get("/api/countries/".concat(name)).then(function (res) {
-        _this2.countrySelected = res.data;
-
-        _this2.getUrl();
+      axios.get("/api/countries/?query=".concat(this.query)).then(function (res) {
+        _this.countries = res.data.data;
+        if (_this.countrySelected) _this.getUrl();
       })["catch"](function (err) {
         console.log(err.response.data);
       });
@@ -39971,11 +39963,18 @@ var render = function() {
       { staticClass: "form-group" },
       [
         _c("vue-typeahead-bootstrap", {
-          attrs: { data: _vm.countries, placeholder: "Buscar un pais" },
+          attrs: {
+            data: _vm.countries,
+            serializer: function(item) {
+              return item.name
+            },
+            placeholder: "Buscar un pais"
+          },
           on: {
             hit: function($event) {
-              return _vm.getCountry(_vm.query)
-            }
+              _vm.countrySelected = $event
+            },
+            input: _vm.getCountryList
           },
           model: {
             value: _vm.query,
@@ -39988,6 +39987,19 @@ var render = function() {
       ],
       1
     ),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v("Seleccionaste "),
+      _vm.countrySelected
+        ? _c("span", [
+            _vm._v(
+              _vm._s(_vm.countrySelected.id) +
+                ": " +
+                _vm._s(_vm.countrySelected.name)
+            )
+          ])
+        : _vm._e()
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c(

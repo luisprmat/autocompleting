@@ -19,4 +19,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('countries', 'Api\CountryController@index');
-Route::get('countries/{name}', 'Api\CountryController@show');
