@@ -8,9 +8,15 @@
                 placeholder="Buscar un pais"
                 @hit="countrySelected = $event"
                 @input="getCountryList"
-            ></vue-typeahead-bootstrap>
+            ><template slot="suggestion" slot-scope="{ htmlText }">
+                <div class="d-flex align-items-center justify-content-between">
+                    <span v-html="htmlText"></span>
+                    <!-- <span>8A</span> -->
+                </div>
+            </template>
+            </vue-typeahead-bootstrap>
         </div>
-        <p>Seleccionaste <span v-if="countrySelected">{{ countrySelected.id }}: {{ countrySelected.name }}</span></p>
+        <p v-if="countrySelected">Seleccionaste <span>{{ countrySelected.id }}: {{ countrySelected.name }}</span></p>
         <div class="form-group">
             <a :href="url" class="btn btn-primary" role="button">Ver pais seleccionado</a>
         </div>

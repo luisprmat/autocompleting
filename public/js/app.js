@@ -1928,6 +1928,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -39976,6 +39982,24 @@ var render = function() {
             },
             input: _vm.getCountryList
           },
+          scopedSlots: _vm._u([
+            {
+              key: "suggestion",
+              fn: function(ref) {
+                var htmlText = ref.htmlText
+                return [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex align-items-center justify-content-between"
+                    },
+                    [_c("span", { domProps: { innerHTML: _vm._s(htmlText) } })]
+                  )
+                ]
+              }
+            }
+          ]),
           model: {
             value: _vm.query,
             callback: function($$v) {
@@ -39988,18 +40012,18 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("p", [
-      _vm._v("Seleccionaste "),
-      _vm.countrySelected
-        ? _c("span", [
+    _vm.countrySelected
+      ? _c("p", [
+          _vm._v("Seleccionaste "),
+          _c("span", [
             _vm._v(
               _vm._s(_vm.countrySelected.id) +
                 ": " +
                 _vm._s(_vm.countrySelected.name)
             )
           ])
-        : _vm._e()
-    ]),
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c(
