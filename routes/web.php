@@ -22,4 +22,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+// Country Routes
+Route::patch('countries/{country}/restore', 'CountryController@restore')->name('countries.restore');
+Route::delete('countries/{country}/force-delete', 'CountryController@forceDelete')->name('countries.force-delete');
+Route::get('countries/trashed', 'CountryController@viewTrashed')->name('countries.trashed');
+
 Route::resource('countries', 'CountryController');

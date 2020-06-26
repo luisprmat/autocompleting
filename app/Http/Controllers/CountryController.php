@@ -14,6 +14,7 @@ class CountryController extends Controller
         $this->middleware('auth')->except(['index']);
         $this->authorizeResource(Country::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +22,8 @@ class CountryController extends Controller
      */
     public function index(Sortable $sortable)
     {
+        $view = 'index';
+
         $sortable->setCurrentOrder(request('sort'));
 
         $countries = Country::query()
@@ -31,7 +34,30 @@ class CountryController extends Controller
         ;
 
 
-        return view('countries.index', compact(['countries', 'sortable']));
+        return view('countries.index', compact(['countries', 'sortable', 'view']));
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function viewTrashed(Sortable $sortable)
+    {
+        $view = 'trash';
+
+        $sortable->setCurrentOrder(request('sort'));
+
+        $countries = Country::query()
+            ->onlyTrashed()
+            ->when(in_array($sortable->getColumn(), ['id', 'name']) , function ($q) use ($sortable) {
+                $q->orderBy($sortable->getColumn(), $sortable->getDirection());
+            })
+            ->paginate(10)
+        ;
+
+
+        return view('countries.index', compact(['countries', 'sortable', 'view']));
     }
 
     /**
@@ -122,5 +148,35 @@ class CountryController extends Controller
         $country->delete();
 
         return redirect()->route('countries.index')->withStatus('Pais eliminado exitosamente');
+    }
+
+    /**
+     * Restore the specified resource from trashed.
+     *
+     * @param  \App\Country  $country
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $country = Country::withTrashed()->where('id', $id)->firstOrFail();
+
+        $country->restore();
+
+        return redirect()->route('countries.index')->withStatus('Pais restaurado exitosamente');
+    }
+
+    /**
+     * Delete the specified resource from trashed permanently.
+     *
+     * @param  \App\Country  $country
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDelete($id)
+    {
+        $country = Country::withTrashed()->where('id', $id)->firstOrFail();
+
+        $country->forceDelete();
+
+        return redirect()->route('countries.index')->withStatus('Pais eliminado permanentemente');
     }
 }

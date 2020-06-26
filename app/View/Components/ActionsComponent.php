@@ -11,7 +11,7 @@ class ActionsComponent extends Component
     public $model;
 
     /**
-     * Size of buttons (based in 'Bootstrap)
+     * Size of buttons (based in 'Bootstrap')
      *
      * Supported 'sm', 'lg'
      *
@@ -19,14 +19,24 @@ class ActionsComponent extends Component
     public $size;
 
     /**
+     * List of allowed actions
+     *
+     * Supported 'update', 'delete', 'restore', 'forceDelete'
+     *
+     * @array
+     */
+    public $allowedActions;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Model $model, $size = '')
+    public function __construct(Model $model, $size = '', $allowedActions = ['update', 'delete'])
     {
         $this->model = $model;
         $this->size = $size;
+        $this->allowedActions = collect($allowedActions);
     }
 
     /**
