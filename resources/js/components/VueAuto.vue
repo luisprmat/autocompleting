@@ -8,6 +8,7 @@
                 placeholder="Buscar un pais"
                 @hit="countrySelected = $event"
                 @input="getCountryList"
+                showAllResults="true"
             ><template slot="suggestion" slot-scope="{ htmlText }">
                 <div class="d-flex align-items-center justify-content-between">
                     <span v-html="htmlText"></span>

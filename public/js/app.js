@@ -1934,6 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -39974,7 +39975,8 @@ var render = function() {
             serializer: function(item) {
               return item.name
             },
-            placeholder: "Buscar un pais"
+            placeholder: "Buscar un pais",
+            showAllResults: "true"
           },
           on: {
             hit: function($event) {
