@@ -12,6 +12,7 @@ class CountryController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index']);
+        $this->authorizeResource(Country::class);
     }
     /**
      * Display a listing of the resource.
